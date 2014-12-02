@@ -3,7 +3,7 @@
 # Replace with the following if you don't have a local clone (but a
 # local clone will be much faster)
 # HISTORY_SRC=git://github.com/samth/plt-history
-HISTORY_SRC=/home/samth/work/plt-history
+HISTORY_SRC=$HOME/work/plt-history
 
 NAME=$1
 
@@ -45,7 +45,7 @@ fi
 # Slice the repository
 racket -l git-slice/compute $PTH $TMPDIR
 racket -l git-slice/filter $TMPDIR
-rm ./git/info/grafts
+rm .git/info/grafts
 racket -l git-slice/chop $TMPDIR
 
 echo "Sliced!"
