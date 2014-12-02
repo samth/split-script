@@ -9,6 +9,16 @@ NAME=$1
 
 TMPDIR=/tmp/slice_$NAME
 
+curl -s "https://api.github.com/repos/racket/$NAME" | grep "Not Found"
+
+if [ $? -eq 0 ]; then
+    echo "Repository racket/$NAME doesn't yet exist"
+else
+    echo "Repository racket/$NAME already exists, exiting"
+    exit 1
+fi
+    
+
 echo "Installing git-slice"
 
 raco pkg install --skip-installed --deps search-auto git-slice
@@ -24,6 +34,9 @@ cd chop_$NAME
 sh ./graft.sh
 
 echo "Grafted"
+
+# create this here for synchronization
+hub create racket/$NAME
 
 if [ -z $2 ]; then
     if [ -d pkgs/$NAME-pkgs ]; then
@@ -57,7 +70,6 @@ git commit -m "Remove extra directories."
 echo "Directories removed"
 
 # Create the github repository
-hub create racket/$NAME
 hub remote add -p racket/$NAME
 hub push racket master
 
