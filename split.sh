@@ -36,7 +36,7 @@ sh ./graft.sh
 echo "Grafted"
 
 # create this here for synchronization
-hub create racket/$NAME
+hub create racket/$NAME || exit 1
 
 if [ -z $2 ]; then
     if [ -d pkgs/$NAME-pkgs ]; then
